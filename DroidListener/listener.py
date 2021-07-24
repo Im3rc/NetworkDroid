@@ -3,7 +3,9 @@
 import subprocess
 from xml.dom import minidom
 from xmlCords import *
-from tap import * 
+import sys
+sys.path.insert(0, '/home/m3rc/Projects/NetworkDroid/adbController')
+from adbScripts import * 
 
 def start_listener():
 	subprocess.Popen("adb shell am start -n com.emanuelef.remote_capture/.activities.MainActivity", stdout=subprocess.PIPE,stderr=subprocess.STDOUT, shell=True)

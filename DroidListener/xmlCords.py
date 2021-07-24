@@ -2,13 +2,13 @@
 
 import subprocess
 from xml.dom import minidom
-from tap import * 
+import sys
+sys.path.insert(0, '/home/m3rc/Projects/NetworkDroid/adbController')
+from adbScripts import * 
 
 def getCords():
 	xml_data = ""
-	proc = subprocess.Popen("adb exec-out uiautomator dump /dev/tty | awk '{gsub(\"UI hierchary dumped to: /dev/tty\", \"\");print}'", stdout=subprocess.PIPE,stderr=subprocess.STDOUT, shell=True)
-	output_1 = proc.stdout.read().decode()
-	processed_output = output_1.splitlines()
+	processed_output = activityXmlDump()
 	for i in processed_output:
 		if(i[0:5] == "<?xml"):
 			xml_data = i
