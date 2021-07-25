@@ -2,8 +2,6 @@
 
 import subprocess
 from xml.dom import minidom
-import sys
-sys.path.insert(0, '/home/m3rc/Projects/NetworkDroid/adbController')
 from adbScripts import * 
 
 def getCords():
@@ -12,6 +10,7 @@ def getCords():
 	for i in processed_output:
 		if(i[0:5] == "<?xml"):
 			xml_data = i
+
 	nodes = minidom.parseString(xml_data).getElementsByTagName("node")
 	return(nodes)
 
@@ -26,12 +25,14 @@ def processCords(c):
 	return(cords)
 
 def executeCords_id(id):
+	c = ""
 	nodes = getCords()
 	for node in nodes:
 		if(node.getAttribute("resource-id") == id ):
 			c = node.getAttribute("bounds")
-	cords = processCords(c)
-	tap(cords[0],cords[1])
+			cords = processCords(c)
+			tap(cords[0],cords[1])
+			return 1
 
 def executeCords_content(id):
 	nodes = getCords()
@@ -39,5 +40,7 @@ def executeCords_content(id):
 	for node in nodes:
 		if(node.getAttribute("content-desc") == id ):
 			c = node.getAttribute("bounds")
-	cords = processCords(c)
-	tap(cords[0],cords[1])
+			cords = processCords(c)
+			tap(cords[0],cords[1])
+			return 1
+

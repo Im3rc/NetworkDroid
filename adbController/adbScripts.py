@@ -13,10 +13,24 @@ def runADB(args):
 	processed_output = output_1.splitlines()
 	return(processed_output)
 
+def processADBcurrentActivity(args):
+	s = args[0].split(' ')
+	return(s[-2])
+
 def activityXmlDump():
 	args = "adb exec-out uiautomator dump /dev/tty | awk '{gsub(\"UI hierchary dumped to: /dev/tty\", \"\");print}'"
 	return(runADB(args))
 
-def currentActivityList():
+def currentActivityIdentifier():
 	args = 'adb shell "dumpsys activity activities | grep mResumedActivity"'
-	return(runADB(args))
+	#print(processADBcurrentActivity(runADB(args)))
+	return(processADBcurrentActivity(runADB(args)))
+	
+def startActivity(var):
+	args = "adb shell am start -n " + var
+	subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+
+def goBack():
+	#print("yyyyy")
+	args = "adb shell input keyevent 4"
+	subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
